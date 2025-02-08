@@ -1,0 +1,40 @@
+.admin-panel {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
+  .stats p {
+    font-size: 18px;
+    margin: 5px 0;
+  }
+  
+  .admin-ticket-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .admin-ticket-item {
+    background: #ffffff;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .remove-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .remove-btn:hover {
+    background: darkred;
+  }
+  
