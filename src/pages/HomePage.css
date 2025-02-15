@@ -1,0 +1,252 @@
+:root {
+  --primary-color: #007AFF;
+  --background-color: #F5F5F7;
+  --text-color: #1D1D1F;
+  --card-background: #FFFFFF;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+.home-container {
+  width: min(90%, 1200px);
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.home-container h1 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 600;
+  margin-bottom: 3rem;
+  line-height: 1.2;
+}
+
+.department-links {
+  display: grid;
+  gap: 1rem;
+  width: min(100%, 500px);
+  margin: 0 auto;
+}
+
+.department-button {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  padding: 1.25rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+.department-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.1);
+}
+
+.admin-signin-button {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.admin-signin-button:hover {
+  background-color: #0066CC;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background-color: var(--card-background);
+  padding: 2.5rem;
+  border-radius: 20px;
+  width: min(90%, 400px);
+  box-shadow: var(--shadow);
+  animation: slideUp 0.3s ease;
+  position: relative;
+}
+
+.sign-in-modal h2 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.875rem;
+  border: 2px solid #E5E5E5;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #F8F8F8;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+}
+
+.modal-buttons {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.sign-in-btn, .cancel-btn, .error-btn {
+  padding: 0.875rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sign-in-btn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.sign-in-btn:hover {
+  background-color: #0066CC;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+}
+
+.sign-in-btn:active {
+  transform: translateY(0);
+}
+
+.cancel-btn {
+  background-color: #F2F2F7;
+  color: var(--text-color);
+}
+
+.cancel-btn:hover {
+  background-color: #E5E5EA;
+}
+
+/* Error Modal Styles */
+.error-modal {
+  text-align: center;
+}
+
+.error-modal h2 {
+  color: #FF3B30;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.error-modal p {
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.error-btn {
+  background-color: #FF3B30;
+  color: white;
+  width: 100%;
+}
+
+.error-btn:hover {
+  background-color: #FF2D55;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.2);
+}
+
+.error-btn:active {
+  transform: translateY(0);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 768px) {
+  .modal-buttons {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .modal-content {
+    padding: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 2rem;
+  }
+  
+  .sign-in-modal h2 {
+    font-size: 1.5rem;
+  }
+  
+  .form-group input,
+  .sign-in-btn,
+  .cancel-btn,
+  .error-btn {
+    padding: 0.75rem;
+  }
+} 
