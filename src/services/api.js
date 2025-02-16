@@ -44,9 +44,17 @@ export const ticketService = {
 export const adminService = {
   // Admin login
   login: async (email, password) => {
-    const response = await api.post('/admin/login', { email, password });
-    localStorage.setItem('token', response.data.token);
-    return response.data;
+    try {
+      const response = await api.post('/admin/login', { email, password });
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        return response.data;
+      }
+      throw new Error('No token received');
+    } catch (err) {
+      console.error('Login error:', err);
+      throw err;
+    }
   },
 
   // Remove ticket

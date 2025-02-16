@@ -18,12 +18,13 @@ const QueuePage = ({ department, prefix }) => {
   // Function to fetch and update queue
   const updateQueue = useCallback(async () => {
     try {
+      setLoading(true);
       const tickets = await queueService.getDepartmentQueue(department);
       setQueue(tickets);
       setError(null);
     } catch (err) {
-      setError('Failed to fetch queue data');
-      console.error('Error fetching queue:', err);
+      console.error('Error details:', err);
+      setError(err.response?.data?.message || 'Failed to fetch queue data');
     } finally {
       setLoading(false);
     }
