@@ -5,13 +5,18 @@ const Ticket = require('../models/Ticket');
 // Get all tickets for a department
 router.get('/:department', async (req, res) => {
   try {
-    console.log('Accessing department:', req.params.department);
+    const { department } = req.params;
+    console.log(`Accessing ${department} department queue`);
+    
+    // Convert department name to match exactly
+    const departmentName = department.charAt(0).toUpperCase() + department.slice(1).toLowerCase();
+    
     const tickets = await Ticket.find({ 
-      department: req.params.department,
+      department: departmentName,
       status: { $in: ['waiting', 'serving'] }
     }).sort('timestamp');
     
-    console.log('Found tickets:', tickets);
+    console.log(`Found ${tickets.length} tickets for ${departmentName}`);
     return res.json(tickets);
   } catch (err) {
     console.error('Queue fetch error:', err);
