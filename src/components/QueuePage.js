@@ -123,7 +123,7 @@ const QueuePage = ({ department, prefix }) => {
           <div className="modal-content">
             <h2>Your Ticket</h2>
             <QRCodeCanvas 
-              value={`https://your-netlify-app-name.netlify.app/ticket/${modalTicket}`} 
+              value={`https://ers-queue-list.netlify.app/ticket/${modalTicket}`} 
               size={300} 
             />
             <p>{modalTicket}</p>

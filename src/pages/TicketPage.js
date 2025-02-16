@@ -98,7 +98,7 @@ function TicketPage() {
           )}
         </div>
         <QRCodeCanvas 
-          value={`https://your-netlify-app-name.netlify.app/ticket/${ticketCode}`} 
+          value={`https://ers-queue-list.netlify.app/ticket/${ticketCode}`} 
           size={150} 
         />
       </div>
