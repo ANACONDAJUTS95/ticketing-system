@@ -9,9 +9,10 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: 'https://exquisite-tanuki-0c9813.netlify.app',
+  origin: ['https://exquisite-tanuki-0c9813.netlify.app', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token', 'Accept'],
+  exposedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
   optionsSuccessStatus: 200
 };
@@ -28,6 +29,11 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use('/api/queues', require('./routes/queueRoutes'));
 app.use('/api/tickets', require('./routes/ticketRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+
+// Add this before your routes
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'API is working' });
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
