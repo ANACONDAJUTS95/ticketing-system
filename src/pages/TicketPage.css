@@ -67,4 +67,133 @@
   .ticket-code {
     font-size: 1.5rem;
   }
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  width: min(90%, 400px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease;
+}
+
+.survey-modal {
+  text-align: center;
+}
+
+.survey-modal h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: #1D1D1F;
+}
+
+.survey-modal p {
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+.survey-buttons {
+  display: grid;
+  gap: 1rem;
+}
+
+.survey-btn, .skip-btn {
+  padding: 0.875rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.survey-btn {
+  background-color: #007AFF;
+  color: white;
+}
+
+.survey-btn:hover {
+  background-color: #0066CC;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+}
+
+.skip-btn {
+  background-color: #F2F2F7;
+  color: #1D1D1F;
+}
+
+.skip-btn:hover {
+  background-color: #E5E5EA;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 768px) {
+  .survey-buttons {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 2rem;
+  }
+  
+  .survey-modal h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Add these styles to your existing TicketPage.css */
+
+.ticket-status {
+  margin: 1.5rem 0;
+}
+
+.ticket-state {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+.ticket-state strong {
+  color: #007AFF;
+  text-transform: capitalize;
+}
+
+.ticket-completed {
+  color: #28a745;
+  font-weight: 500;
+  margin-top: 0.5rem;
 } 

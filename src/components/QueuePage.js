@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import "./QueuePage.css";
 import { Link } from 'react-router-dom';
+import { queueService } from '../services/api';
+import LoadingSpinner from './LoadingSpinner';
+import ErrorMessage from './ErrorMessage';
 
 const QueuePage = ({ department, prefix }) => {
   const [queue, setQueue] = useState([]);
@@ -9,43 +12,82 @@ const QueuePage = ({ department, prefix }) => {
   const [modalTicket, setModalTicket] = useState(null);
   const [timer, setTimer] = useState(30);
   const [timerId, setTimerId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const savedQueue = JSON.parse(localStorage.getItem(`${department}Queue`)) || [];
-    setQueue(savedQueue);
+  // Function to fetch and update queue
+  const updateQueue = useCallback(async () => {
+    try {
+      const tickets = await queueService.getDepartmentQueue(department);
+      setQueue(tickets);
+      setError(null);
+    } catch (err) {
+      setError('Failed to fetch queue data');
+      console.error('Error fetching queue:', err);
+    } finally {
+      setLoading(false);
+    }
   }, [department]);
 
+  // Initial load and interval setup for real-time updates
+  useEffect(() => {
+    // Initial load
+    updateQueue();
+
+    // Set up interval to check for updates every 2 seconds
+    const interval = setInterval(updateQueue, 2000);
+
+    // Cleanup on unmount
+    return () => clearInterval(interval);
+  }, [updateQueue]);
+
+  // Save queue to localStorage when it changes
   useEffect(() => {
     localStorage.setItem(`${department}Queue`, JSON.stringify(queue));
   }, [queue, department]);
 
-  const generateTicket = () => {
-    const dingSound = new Audio("/sounds/ding.mp3");
-    const randomNumber = Math.floor(10000 + Math.random() * 90000);
-    const ticketCode = `${prefix}-${randomNumber}`;
-    const newQueue = [...queue, { code: ticketCode, timestamp: Date.now() }];
-    setQueue(newQueue);
-    dingSound.play();
+  const generateTicket = async () => {
+    try {
+      setLoading(true);
+      const dingSound = new Audio("/sounds/ding.mp3");
+      const newTicket = await queueService.generateTicket(department, prefix);
+      
+      setModalTicket(newTicket.code);
+      setShowModal(true);
+      setTimer(30);
+      dingSound.play();
 
-    setModalTicket(ticketCode);
-    setShowModal(true);
-    setTimer(30);
+      await updateQueue();
 
-    if (timerId) clearTimeout(timerId);
-    
-    const newTimerId = setInterval(() => {
-      setTimer((prevTimer) => {
-        if (prevTimer === 1) {
-          clearTimeout(newTimerId);
-          setShowModal(false);
-          return 30;
-        }
-        return prevTimer - 1;
-      });
-    }, 1000);
+      if (timerId) clearTimeout(timerId);
+      
+      const newTimerId = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer === 1) {
+            clearTimeout(newTimerId);
+            setShowModal(false);
+            return 30;
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
 
-    setTimerId(newTimerId);
+      setTimerId(newTimerId);
+    } catch (err) {
+      setError('Failed to generate ticket');
+      console.error('Error generating ticket:', err);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return <LoadingSpinner message={`Loading ${department} Queue...`} />;
+  }
+
+  if (error) {
+    return <ErrorMessage message={error} onRetry={updateQueue} />;
+  }
 
   return (
     <div className="queue-container">
@@ -80,7 +122,7 @@ const QueuePage = ({ department, prefix }) => {
         <div className="modal">
           <div className="modal-content">
             <h2>Your Ticket</h2>
-            <QRCodeCanvas value={`http://localhost:3000/ticket/${modalTicket}`} size={300} />
+            <QRCodeCanvas value={`https://your-domain.com/ticket/${modalTicket}`} size={300} />
             <p>{modalTicket}</p>
             <button onClick={() => setShowModal(false)}>
               Done Scanning ({timer}s)
