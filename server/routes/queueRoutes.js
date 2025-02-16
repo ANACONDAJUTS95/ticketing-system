@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Ticket = require('../models/Ticket');
 
+// Add this at the top of your routes
+router.options('/:department', (req, res) => {
+  res.status(200).end();
+});
+
 // Get all tickets for a department
 router.get('/:department', async (req, res) => {
   const { department } = req.params;
