@@ -97,7 +97,10 @@ function TicketPage() {
             </p>
           )}
         </div>
-        <QRCodeCanvas value={`http://localhost:3000/ticket/${ticketCode}`} size={150} />
+        <QRCodeCanvas 
+          value={`https://your-netlify-app-name.netlify.app/ticket/${ticketCode}`} 
+          size={150} 
+        />
       </div>
       <p className="ticket-note">
         Please keep this page open. Your phone will vibrate when you're next in line.

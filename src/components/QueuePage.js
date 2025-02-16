@@ -122,7 +122,10 @@ const QueuePage = ({ department, prefix }) => {
         <div className="modal">
           <div className="modal-content">
             <h2>Your Ticket</h2>
-            <QRCodeCanvas value={`https://your-domain.com/ticket/${modalTicket}`} size={300} />
+            <QRCodeCanvas 
+              value={`https://your-netlify-app-name.netlify.app/ticket/${modalTicket}`} 
+              size={300} 
+            />
             <p>{modalTicket}</p>
             <button onClick={() => setShowModal(false)}>
               Done Scanning ({timer}s)

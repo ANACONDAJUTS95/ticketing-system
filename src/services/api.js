@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://your-render-url.onrender.com/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://queue-system-api.onrender.com/api';
 
 // Create axios instance with base configuration
 const api = axios.create({
